@@ -1,4 +1,7 @@
 <resources>
 	<string name="app_name">PopularMovies1</string>
 	<string name="img_description">Movie image</string>
+	<string name="error_server">There was a problem with the server</string>
+	<string name="error_network">Check your internet connection</string>
+	<string name="retry">Retry</string>
 </resources>
