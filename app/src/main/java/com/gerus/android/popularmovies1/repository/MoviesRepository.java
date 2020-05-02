@@ -36,7 +36,27 @@ public class MoviesRepository {
 	}
 
 	@EverythingIsNonNull
-	public void getTopMovies(@NonNull final MoviesCallback callback) {
+	public void getPopular(@NonNull final MoviesCallback callback) {
+		moviesAPI.getPopular(key).enqueue(new Callback<MovieRequest>() {
+
+			@Override
+			public void onResponse(Call<MovieRequest> call, Response<MovieRequest> response) {
+				if (response.isSuccessful() && response.body() != null && response.body().getResults() != null && !response.body().getResults().isEmpty()) {
+					callback.onSuccess(response.body().getResults());
+				} else {
+					callback.onError(processError(response));
+				}
+			}
+
+			@Override
+			public void onFailure(Call<MovieRequest> call, Throwable t) {
+				callback.onError(new ErrorMessage(ErrorMessage.ErrorType.REQUEST, context.getString(R.string.error_network)));
+			}
+		});
+	}
+
+	@EverythingIsNonNull
+	public void getTopRated(@NonNull final MoviesCallback callback) {
 		moviesAPI.getTopRated(key).enqueue(new Callback<MovieRequest>() {
 
 			@Override
