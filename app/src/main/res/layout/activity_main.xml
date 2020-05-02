@@ -3,14 +3,11 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	tools:context=".MoviesActivity">
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/rcl_movies"
 		tools:listitem="@layout/item_movie_view"
-		app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-		app:spanCount="2"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
 
