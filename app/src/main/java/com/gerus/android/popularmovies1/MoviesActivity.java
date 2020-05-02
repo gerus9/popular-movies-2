@@ -1,5 +1,7 @@
 package com.gerus.android.popularmovies1;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -81,7 +83,9 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 
 	@Override
 	public void onItemSelected(Movie movie) {
-
+		Intent intent = new Intent(this, MovieDetailActivity.class);
+		intent.putExtra(Movie.ID, movie);
+		startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
 	}
 
 	@Override
