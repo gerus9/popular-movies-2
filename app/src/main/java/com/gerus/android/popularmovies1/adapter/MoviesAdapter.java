@@ -84,4 +84,8 @@ public class MoviesAdapter extends RecyclerView.Adapter {
 			return 1;
 		}
 	}
+
+	public List<Movie> getListItems() {
+		return movieList;
+	}
 }
