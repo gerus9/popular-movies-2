@@ -14,12 +14,8 @@ public class ErrorMessage {
 		int REQUEST = 1;
 	}
 
-	private int type;
+	private final int type;
 	private String errorMsg;
-
-	public ErrorMessage(int type) {
-		this.type = type;
-	}
 
 	public ErrorMessage(int type, String errorMsg) {
 		this.type = type;
@@ -32,9 +28,5 @@ public class ErrorMessage {
 
 	public String getErrorMsg() {
 		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
 	}
 }

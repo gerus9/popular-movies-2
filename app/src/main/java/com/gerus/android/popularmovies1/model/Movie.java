@@ -140,4 +140,8 @@ public class Movie {
 	public void setGenreIds(List<Integer> genreIds) {
 		this.genreIds = genreIds;
 	}
+
+	public String getImageURL() {
+		return "http://image.tmdb.org/t/p/w185/"+posterPath;
+	}
 }

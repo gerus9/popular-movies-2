@@ -20,19 +20,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class MoviesRepository {
-
-	private final String BASE_URL = "https://api.themoviedb.org/3/";
-	private final String PROPERTIES = "config.properties";
-	private final String PROPERTIES_API_KEY = "apiKey";
-
-	private Retrofit retrofit;
-	private MoviesAPI moviesAPI;
-	private String key;
-	private Context context;
+	private final MoviesAPI moviesAPI;
+	private final String key;
+	private final Context context;
 
 	public MoviesRepository(Context context) {
+		final String BASE_URL = "https://api.themoviedb.org/3/";
+		final String PROPERTIES = "config.properties";
+		final String PROPERTIES_API_KEY = "apiKey";
+
 		this.context = context;
-		retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 		moviesAPI = retrofit.create(MoviesAPI.class);
 		key = ConfigUtil.getProperties(PROPERTIES, context).getProperty(PROPERTIES_API_KEY);
 	}
