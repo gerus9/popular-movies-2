@@ -11,4 +11,10 @@ It is an exercise for Udacity's "Android Developer Nanodegree Program".
 
 If you want to test the excersive, you have to register in themoviedb.org and replace you API KEY in:
 
-*config.properties.*
+**config.properties**
+
+## IMAGES
+
+![](images/mobile_landscape.png)
+
+![](images/mobile_portrait.png)
