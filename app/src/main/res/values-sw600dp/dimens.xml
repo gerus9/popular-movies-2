@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="view_rate_size">70dp</dimen>
+	<dimen name="size_text_radio">7sp</dimen>
+	<dimen name="size_app_bar_layout">400dp</dimen>
+</resources>

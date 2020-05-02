@@ -1,0 +1,4 @@
+<resources>
+	<string name="image_size_poster">w342</string>
+	<string name="image_size_backdrop">w780</string>
+</resources>

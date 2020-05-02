@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="false"
+	android:orientation="vertical">
+
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar"
+		style="@style/CustomToolbar"
+		android:background="@color/colorPrimary" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="horizontal"
+		android:weightSum="1">
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/image"
+			style="@style/ImageViewDetail"
+			android:layout_weight=".6"
+			android:background="@color/colorPrimary" />
+
+		<androidx.core.widget.NestedScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight=".4"
+			android:fillViewport="true"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@color/colorPrimary"
+					android:orientation="horizontal">
+
+					<com.gerus.android.popularmovies1.view.CircleDisplay
+						android:id="@+id/circleDisplay"
+						android:layout_width="@dimen/view_rate_size"
+						android:layout_height="@dimen/view_rate_size"
+						android:layout_margin="@dimen/item_detail_liner_padding" />
+
+					<androidx.appcompat.widget.AppCompatTextView
+						style="@style/Footer_Title"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:gravity="center"
+						android:text="@string/rating"
+						android:textColor="@color/white"
+						android:textStyle="bold" />
+
+				</LinearLayout>
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/txt_release"
+					style="@style/Date" />
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/txt_description"
+					style="@style/Description" />
+
+			</LinearLayout>
+		</androidx.core.widget.NestedScrollView>
+
+	</LinearLayout>
+
+</LinearLayout>
