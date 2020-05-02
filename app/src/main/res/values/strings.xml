@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">PopularMovies1</string>
+	<string name="app_name">Movies</string>
 	<string name="img_description">Movie image</string>
 	<string name="error_server">There was a problem with the server</string>
 	<string name="error_network">Check your internet connection</string>
@@ -8,4 +8,10 @@
 	<string name="filter_popular">Popular</string>
 	<string name="filter_top_rated">Top Rated</string>
 	<string name="filter">Filter</string>
+	<string name="rating">Rating</string>
+
+	<string name="image_path">http://image.tmdb.org/t/p/%1$s/%2$s</string>
+	<string name="image_size_poster">w300</string>
+	<string name="image_size_backdrop">w780</string>
+	<string name="detail_error_message">Movie data not available</string>
 </resources>

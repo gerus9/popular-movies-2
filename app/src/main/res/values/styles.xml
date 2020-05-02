@@ -6,6 +6,26 @@
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
+
+		<item name="android:windowActivityTransitions">true</item>
+
+		<item name="android:windowEnterTransition">@transition/explode</item>
+		<item name="android:windowExitTransition">@transition/explode</item>
+
+		<item name="android:windowContentTransitions">true</item>
+		<item name="android:windowAllowEnterTransitionOverlap">true</item>
+		<item name="android:windowAllowReturnTransitionOverlap">true</item>
+
+		<item name="android:windowSharedElementEnterTransition">
+			@transition/change_image_transform</item>
+		<item name="android:windowSharedElementExitTransition">
+			@transition/change_image_transform</item>
+	</style>
+
+	<style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
 	<style name="Footer_Title" parent="@android:style/TextAppearance.Medium">
@@ -13,6 +33,50 @@
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:textColor">@color/grey_dark</item>
 		<item name="android:gravity">center</item>
+	</style>
+
+	<style name="Date" parent="@android:style/TextAppearance.Medium">
+		<item name="android:gravity">left</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">@color/grey_dark</item>
+		<item name="android:drawablePadding">10dp</item>
+		<item name="android:drawableStart">@drawable/vc_calendar</item>
+		<item name="android:padding">10dp</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<style name="Description" parent="@android:style/TextAppearance.Medium">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:padding">10dp</item>
+		<item name="android:textSize">17sp</item>
+	</style>
+
+	<style name="Toolbar" parent="ThemeOverlay.AppCompat">
+		<item name="android:textColorPrimary">@color/white</item>
+		<item name="android:textColorSecondary">@color/white</item>
+	</style>
+
+	<style name="CollapsingToolbarLayout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:clipToPadding">false</item>
+	</style>
+
+	<style name="ImageViewDetail">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:scaleType">centerCrop</item>
+	</style>
+
+	<style name="CustomToolbar">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">?attr/actionBarSize</item>
+		<item name="android:layout_marginTop">0dp</item>
+		<item name="android:clipToPadding">false</item>
+		<item name="android:theme">@style/Toolbar</item>
 	</style>
 
 </resources>

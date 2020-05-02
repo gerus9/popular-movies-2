@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<dimen name="icon_padding_upload_image">80dp</dimen>
+	<dimen name="size_text_radio">4sp</dimen>
+	<dimen name="view_rate_size">65dp</dimen>
+	<dimen name="item_detail_liner_padding">10dp</dimen>
+	<dimen name="size_app_bar_layout">250dp</dimen>
 </resources>
