@@ -5,4 +5,7 @@
 	<string name="error_network">Check your internet connection</string>
 	<string name="retry">Retry</string>
 	<string name="click_here">Click here to update the information</string>
+	<string name="filter_popular">Popular</string>
+	<string name="filter_top_rated">Top Rated</string>
+	<string name="filter">Filter</string>
 </resources>
