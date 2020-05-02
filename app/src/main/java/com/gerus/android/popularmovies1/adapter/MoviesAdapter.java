@@ -9,6 +9,7 @@ import com.gerus.android.popularmovies1.R;
 import com.gerus.android.popularmovies1.holder.ViewHolderData;
 import com.gerus.android.popularmovies1.holder.ViewHolderEmpty;
 import com.gerus.android.popularmovies1.model.Movie;
+import com.gerus.android.popularmovies1.utils.ImageUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -46,16 +47,16 @@ public class MoviesAdapter extends RecyclerView.Adapter {
 
 	@Override
 	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-		if(holder instanceof ViewHolderData) {
+		if (holder instanceof ViewHolderData) {
 			ViewHolderData viewHolderData = (ViewHolderData) holder;
 			Movie movie = movieList.get(position);
 			Picasso.get()
-				   .load(movie.getImageURL())
+				   .load(ImageUtil.buildURLPoster(context, movie.getPosterPath()))
 				   .placeholder(R.drawable.vc_placeholder)
 				   .error(R.drawable.vc_error)
 				   .into(viewHolderData.imageView);
 			viewHolderData.imageView.setOnClickListener(view -> callback.onItemSelected(movie));
-		} else if (holder instanceof ViewHolderEmpty){
+		} else if (holder instanceof ViewHolderEmpty) {
 			((ViewHolderEmpty) holder).emptyLayout.setOnClickListener(view -> callback.onClickEmptyLayout());
 		}
 	}
@@ -77,9 +78,9 @@ public class MoviesAdapter extends RecyclerView.Adapter {
 	}
 
 	public int getNumberColumns(int position) {
-		if(position == movieList.size()) {
+		if (position == movieList.size()) {
 			return context.getResources().getInteger(R.integer.numberColumns);
-		}else {
+		} else {
 			return 1;
 		}
 	}
