@@ -10,10 +10,9 @@ import android.widget.PopupMenu;
 
 import com.gerus.android.popularmovies1.adapter.MoviesAdapter;
 import com.gerus.android.popularmovies1.adapter.MoviesAdapterCallback;
+import com.gerus.android.popularmovies1.model.APIResponse;
 import com.gerus.android.popularmovies1.model.ErrorMessage;
 import com.gerus.android.popularmovies1.model.Movie;
-import com.gerus.android.popularmovies1.repository.MoviesRepository;
-import com.gerus.android.popularmovies1.repository.interfaces.MoviesCallback;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,21 +22,28 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCallback, PopupMenu.OnMenuItemClickListener, MoviesCallback {
+public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCallback, PopupMenu.OnMenuItemClickListener {
 
 	private MoviesAdapter mAdapter;
-	private @FilterType int filterSelected = FilterType.POPULAR;
+	private @FilterType
+	int filterSelected = FilterType.POPULAR;
+
+
 	@Retention(RetentionPolicy.SOURCE)
 	public @interface FilterType {
+
 		int POPULAR = 0;
+
 		int TOP_RATED = 1;
 	}
 
 
-	private MoviesRepository moviesRepository;
+	private MoviesViewModel viewModel;
 
 	private static String BUNDLE_MOVIES = "Movies";
 	private static String BUNDLE_FILTER = "Filter";
@@ -47,19 +53,11 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initViews();
-		moviesRepository = new MoviesRepository(getApplicationContext());
-
-		ArrayList<Movie> arrayList = null;
 		if (savedInstanceState != null) {
-			arrayList = savedInstanceState.getParcelableArrayList(BUNDLE_MOVIES);
 			filterSelected = savedInstanceState.getInt(BUNDLE_FILTER);
 		}
-
-		if (arrayList == null || arrayList.isEmpty()) {
-			fetchDataByFilterSelected();
-		} else {
-			setAdapterList(arrayList);
-		}
+		viewModel = new ViewModelProvider(this).get(MoviesViewModel.class);
+		fetchDataByFilterSelected();
 	}
 
 	private void initViews() {
@@ -78,10 +76,25 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 	}
 
 	private void fetchDataByFilterSelected() {
+		LifecycleOwner owner = this;
 		if (filterSelected == FilterType.POPULAR) {
-			moviesRepository.getPopular(this);
+			viewModel.getListMoviesPopular().observe(owner, listAPIResponse -> {
+				viewModel.getListMoviesPopular().removeObservers(owner);
+				parserAPIResponse(listAPIResponse);
+			});
 		} else {
-			moviesRepository.getTopRated(this);
+			viewModel.getListMoviesTopRated().observe(this, listAPIResponse -> {
+				viewModel.getListMoviesTopRated().removeObservers(owner);
+				parserAPIResponse(listAPIResponse);
+			});
+		}
+	}
+
+	private void parserAPIResponse(APIResponse<List<Movie>> listAPIResponse) {
+		if (listAPIResponse.hasError()) {
+			showErrorDialog(listAPIResponse.getError());
+		} else {
+			setAdapterList(listAPIResponse.getData());
 		}
 	}
 
@@ -159,19 +172,9 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 		return false;
 	}
 
-	@Override
-	public void onSuccess(List<Movie> movieList) {
-		setAdapterList(movieList);
-	}
-
 	private void setAdapterList(List<Movie> movieList) {
 		if (mAdapter != null) {
 			mAdapter.addData(movieList);
 		}
-	}
-
-	@Override
-	public void onError(ErrorMessage message) {
-		showErrorDialog(message);
 	}
 }
