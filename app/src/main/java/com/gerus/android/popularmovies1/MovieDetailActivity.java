@@ -5,24 +5,27 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gerus.android.popularmovies1.databinding.ActivityDetailBinding;
 import com.gerus.android.popularmovies1.model.Movie;
 import com.gerus.android.popularmovies1.utils.ImageUtil;
-import com.gerus.android.popularmovies1.view.CircleDisplay;
 import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 public class MovieDetailActivity extends AppCompatActivity {
+
+	private ActivityDetailBinding mBinding;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
+
+		mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
 		if (validateMovieData(getIntent())) {
 			Movie movie = getIntent().getParcelableExtra(Movie.ID);
@@ -42,29 +45,25 @@ public class MovieDetailActivity extends AppCompatActivity {
 	}
 
 	private void setRelease(Movie movie) {
-		TextView description = findViewById(R.id.txt_release);
-		description.setText(movie.getReleaseDate());
+		mBinding.txtRelease.setText(movie.getReleaseDate());
 	}
 
 	private void setDescription(Movie movie) {
-		TextView description = findViewById(R.id.txt_description);
-		description.setText(movie.getOverview());
+		mBinding.txtDescription.setText(movie.getOverview());
 	}
 
 	private void setAverage(Movie movie) {
-		CircleDisplay mCircleDisplay = findViewById(R.id.circleDisplay);
-		mCircleDisplay.setTextSize(getResources().getDimension(R.dimen.size_text_radio));
-		mCircleDisplay.setAnimDuration(1500);
-		mCircleDisplay.setValueWidthPercent(35f);
-		mCircleDisplay.setDrawText(true);
-		mCircleDisplay.setFormatDigits(1);
-		mCircleDisplay.setStepSize(0.5f);
-		mCircleDisplay.showValue((float) (movie.getVoteAverage() * 10), 100f, true);
+		mBinding.circleDisplay.setTextSize(getResources().getDimension(R.dimen.size_text_radio));
+		mBinding.circleDisplay.setAnimDuration(1500);
+		mBinding.circleDisplay.setValueWidthPercent(35f);
+		mBinding.circleDisplay.setDrawText(true);
+		mBinding.circleDisplay.setFormatDigits(1);
+		mBinding.circleDisplay.setStepSize(0.5f);
+		mBinding.circleDisplay.showValue((float) (movie.getVoteAverage() * 10), 100f, true);
 	}
 
 	private void setImage(Movie movie) {
-		ImageView imageView = findViewById(R.id.image);
-		Picasso.get().load(getImage(movie)).placeholder(R.drawable.vc_placeholder).error(R.drawable.vc_error).into(imageView);
+		Picasso.get().load(getImage(movie)).placeholder(R.drawable.vc_placeholder).error(R.drawable.vc_error).into(mBinding.image);
 	}
 
 	private void closeOnError() {
