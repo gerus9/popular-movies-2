@@ -1,9 +1,7 @@
 package com.gerus.android.popularmovies1;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 

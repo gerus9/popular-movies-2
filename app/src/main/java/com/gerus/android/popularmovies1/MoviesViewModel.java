@@ -10,7 +10,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-
 import androidx.lifecycle.MutableLiveData;
 
 public class MoviesViewModel extends AndroidViewModel {
