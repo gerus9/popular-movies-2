@@ -12,7 +12,6 @@ import com.gerus.android.popularmovies1.model.Movie;
 import com.gerus.android.popularmovies1.utils.ImageUtil;
 import com.squareup.picasso.Picasso;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -31,7 +30,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 			Movie movie = getIntent().getParcelableExtra(Movie.ID);
 			if (movie != null) {
 				setTitle(movie.getTitle());
-				setToolbar();
 				setImage(movie);
 				setRelease(movie);
 				setAverage(movie);
@@ -53,12 +51,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 	}
 
 	private void setAverage(Movie movie) {
-		mBinding.circleDisplay.setTextSize(getResources().getDimension(R.dimen.size_text_radio));
-		mBinding.circleDisplay.setAnimDuration(1500);
-		mBinding.circleDisplay.setValueWidthPercent(35f);
-		mBinding.circleDisplay.setDrawText(true);
-		mBinding.circleDisplay.setFormatDigits(1);
-		mBinding.circleDisplay.setStepSize(0.5f);
 		mBinding.circleDisplay.showValue((float) (movie.getVoteAverage() * 10), 100f, true);
 	}
 
@@ -75,21 +67,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 		return intent != null && intent.hasExtra(Movie.ID);
 	}
 
-	private void setToolbar() {
-		setSupportActionBar(findViewById(R.id.toolbar));
-		ActionBar voActionBar = getSupportActionBar();
-		if (voActionBar != null) {
-			voActionBar.setDisplayHomeAsUpEnabled(true);
-		}
-	}
-
 	private String getImage(Movie movie) {
-		int orientation = getResources().getConfiguration().orientation;
-		if (orientation == Configuration.ORIENTATION_LANDSCAPE || TextUtils.isEmpty(movie.getBackdropPath())) {
-			return ImageUtil.buildURLPoster(this, movie.getPosterPath());
-		} else {
-			return ImageUtil.buildURLBackdrop(this, movie.getBackdropPath());
-		}
+		return ImageUtil.buildURLPoster(this, movie.getPosterPath());
 	}
 
 	@Override
