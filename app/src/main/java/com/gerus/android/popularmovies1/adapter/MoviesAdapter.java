@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gerus.android.popularmovies1.MoviesActivity;
 import com.gerus.android.popularmovies1.R;
 import com.gerus.android.popularmovies1.holder.ViewHolderData;
 import com.gerus.android.popularmovies1.holder.ViewHolderEmpty;
@@ -21,6 +22,8 @@ public class MoviesAdapter extends RecyclerView.Adapter {
 
 	private final int TYPE_EMPTY = 0;
 	private final int TYPE_DATA = 1;
+	private @MoviesActivity.FilterType
+	int filterType = MoviesActivity.FilterType.POPULAR;
 
 	private List<Movie> movieList;
 	private Context context;
@@ -57,7 +60,16 @@ public class MoviesAdapter extends RecyclerView.Adapter {
 				   .into(viewHolderData.imageView);
 			viewHolderData.imageView.setOnClickListener(view -> callback.onItemSelected(movie));
 		} else if (holder instanceof ViewHolderEmpty) {
-			((ViewHolderEmpty) holder).emptyLayout.setOnClickListener(view -> callback.onClickEmptyLayout());
+			ViewHolderEmpty holderEmpty = (ViewHolderEmpty) holder;
+			if (filterType == MoviesActivity.FilterType.FAVORITES) {
+				holderEmpty.imageView.setImageResource(R.drawable.vc_star_empty_dark);
+				holderEmpty.textView.setText(R.string.click_favorite);
+				holderEmpty.emptyLayout.setOnClickListener(null);
+			} else {
+				holderEmpty.imageView.setImageResource(R.drawable.vc_hand_click);
+				holderEmpty.textView.setText(R.string.click_here);
+				holderEmpty.emptyLayout.setOnClickListener(view -> callback.onClickEmptyLayout());
+			}
 		}
 	}
 
@@ -87,5 +99,9 @@ public class MoviesAdapter extends RecyclerView.Adapter {
 
 	public List<Movie> getListItems() {
 		return movieList;
+	}
+
+	public void setFilterType(int filterSelected) {
+		this.filterType = filterSelected;
 	}
 }
