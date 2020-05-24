@@ -14,4 +14,5 @@
 	<string name="image_size_poster">w300</string>
 	<string name="image_size_backdrop">w780</string>
 	<string name="detail_error_message">Movie data not available</string>
+	<string name="favorite">Favorite</string>
 </resources>

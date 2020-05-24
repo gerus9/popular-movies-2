@@ -128,7 +128,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
+		inflater.inflate(R.menu.menu_filter, menu);
 		return true;
 	}
 
@@ -145,7 +145,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 		if (item.getItemId() == R.id.filter_menu) {
 			PopupMenu popup = new PopupMenu(this, findViewById(R.id.filter_menu));
 			popup.setOnMenuItemClickListener(this);
-			popup.inflate(R.menu.filter);
+			popup.inflate(R.menu.menu_type_filter);
 			popup.getMenu().findItem(getFilterId()).setChecked(true);
 			popup.show();
 			return true;
