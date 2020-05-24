@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.gerus.android.popularmovies1.AppExecutors;
 import com.gerus.android.popularmovies1.database.MoviesDatabase;
+import com.gerus.android.popularmovies1.repository.MovieReposityCallback;
 import com.gerus.android.popularmovies1.repository.MoviesRepository;
 import com.gerus.android.popularmovies1.repository.interfaces.MoviesAPI;
 
@@ -21,7 +22,7 @@ public class MoviesRepositoryUtils {
 		this.application = application;
 	}
 
-	public MoviesRepository getRepository() {
+	public MovieReposityCallback getRepository() {
 		AppExecutors executors = AppExecutors.getInstance();
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 		MoviesAPI moviesAPI = retrofit.create(MoviesAPI.class);

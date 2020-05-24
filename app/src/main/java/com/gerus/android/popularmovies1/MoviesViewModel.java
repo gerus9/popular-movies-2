@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.gerus.android.popularmovies1.model.APIResponse;
 import com.gerus.android.popularmovies1.model.Movie;
-import com.gerus.android.popularmovies1.repository.MoviesRepository;
+import com.gerus.android.popularmovies1.repository.MovieReposityCallback;
 import com.gerus.android.popularmovies1.utils.MoviesRepositoryUtils;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 
 public class MoviesViewModel extends AndroidViewModel {
 
-	private MoviesRepository repository;
+	private MovieReposityCallback repository;
 
 	public MoviesViewModel(@NonNull Application application) {
 		super(application);

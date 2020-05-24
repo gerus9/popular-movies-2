@@ -2,8 +2,12 @@ package com.gerus.android.popularmovies1;
 
 import android.app.Application;
 
-import com.gerus.android.popularmovies1.repository.MoviesRepository;
+import com.gerus.android.popularmovies1.model.ReviewsInfo;
+import com.gerus.android.popularmovies1.model.VideoInfo;
+import com.gerus.android.popularmovies1.repository.MovieReposityCallback;
 import com.gerus.android.popularmovies1.utils.MoviesRepositoryUtils;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,7 +15,7 @@ import androidx.lifecycle.LiveData;
 
 public class MovieDetailViewModel extends AndroidViewModel {
 
-	private MoviesRepository repository;
+	private MovieReposityCallback repository;
 
 	public MovieDetailViewModel(@NonNull Application application) {
 		super(application);
@@ -22,11 +26,11 @@ public class MovieDetailViewModel extends AndroidViewModel {
 		return repository.isFavorite(idMovie);
 	}
 
-	void setFavoriteMovie(int idMovie){
+	void setFavoriteMovie(int idMovie) {
 		repository.setFavoriteMovie(idMovie);
 	}
 
-	void unFavoriteMovie(int idMovie){
+	void unFavoriteMovie(int idMovie) {
 		repository.deleteFavoriteMovie(idMovie);
 	}
 
