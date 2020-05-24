@@ -60,6 +60,11 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 			filterSelected = savedInstanceState.getInt(BUNDLE_FILTER);
 		}
 		viewModel = new ViewModelProvider(this).get(MoviesViewModel.class);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
 		fetchDataByFilterSelected();
 	}
 
@@ -80,24 +85,41 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 
 	private void fetchDataByFilterSelected() {
 		LifecycleOwner owner = this;
-		if (filterSelected == FilterType.POPULAR) {
-			viewModel.getListMoviesPopular().observe(owner, listAPIResponse -> {
-				viewModel.getListMoviesPopular().removeObservers(owner);
-				parserAPIResponse(listAPIResponse);
-			});
-		} else {
-			viewModel.getListMoviesTopRated().observe(this, listAPIResponse -> {
-				viewModel.getListMoviesTopRated().removeObservers(owner);
-				parserAPIResponse(listAPIResponse);
-			});
+		switch (filterSelected) {
+			case FilterType.POPULAR:
+				viewModel.getListMoviesPopular().observe(owner, listAPIResponse -> {
+					viewModel.getListMoviesPopular().removeObservers(owner);
+					parserAPIResponse(listAPIResponse, filterSelected);
+				});
+				break;
+			case FilterType.TOP_RATED:
+				viewModel.getListMoviesTopRated().observe(this, listAPIResponse -> {
+					viewModel.getListMoviesTopRated().removeObservers(owner);
+					parserAPIResponse(listAPIResponse, filterSelected);
+				});
+				break;
+			case FilterType.FAVORITES:
+				viewModel.getFavoriteMovies().observe(this, listAPIResponse -> {
+					viewModel.getFavoriteMovies().removeObservers(owner);
+					parserAPIResponse(listAPIResponse, filterSelected);
+				});
+				break;
 		}
 	}
 
-	private void parserAPIResponse(APIResponse<List<Movie>> listAPIResponse) {
+	private void parserAPIResponse(APIResponse<List<Movie>> listAPIResponse, @FilterType int filterSelected) {
+		setAdapterFilterType(filterSelected);
 		if (listAPIResponse.hasError()) {
 			showErrorDialog(listAPIResponse.getError());
+			setAdapterList(new ArrayList<>());
 		} else {
 			setAdapterList(listAPIResponse.getData());
+		}
+	}
+
+	private void setAdapterFilterType(@FilterType int filterSelected) {
+		if (mAdapter != null) {
+			mAdapter.setFilterType(filterSelected);
 		}
 	}
 
@@ -158,7 +180,15 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 	}
 
 	private int getFilterId() {
-		return filterSelected == FilterType.TOP_RATED ? R.id.filter_top_rated : R.id.filter_popular;
+		switch (filterSelected) {
+			case FilterType.POPULAR:
+				return R.id.filter_popular;
+			case FilterType.FAVORITES:
+				return R.id.filter_favorite;
+			case FilterType.TOP_RATED:
+			default:
+				return R.id.filter_top_rated;
+		}
 	}
 
 	@Override
@@ -170,6 +200,10 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 				break;
 			case R.id.filter_top_rated:
 				filterSelected = FilterType.TOP_RATED;
+				fetchDataByFilterSelected();
+				break;
+			case R.id.filter_favorite:
+				filterSelected = FilterType.FAVORITES;
 				fetchDataByFilterSelected();
 				break;
 		}

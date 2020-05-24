@@ -16,21 +16,21 @@ import androidx.lifecycle.MutableLiveData;
 public class MoviesViewModel extends AndroidViewModel {
 
 	private MoviesRepository repository;
-	private MutableLiveData<APIResponse<List<Movie>>> listMoviesPopular;
-	private MutableLiveData<APIResponse<List<Movie>>> listMoviesTopRated;
 
 	public MoviesViewModel(@NonNull Application application) {
 		super(application);
 		repository = new MoviesRepositoryUtils(application).getRepository();
-		listMoviesPopular = repository.getPopular();
-		listMoviesTopRated = repository.getTopRated();
 	}
 
 	MutableLiveData<APIResponse<List<Movie>>> getListMoviesPopular() {
-		return listMoviesPopular;
+		return repository.getPopular();
 	}
 
 	MutableLiveData<APIResponse<List<Movie>>> getListMoviesTopRated() {
-		return listMoviesTopRated;
+		return repository.getTopRated();
+	}
+
+	MutableLiveData<APIResponse<List<Movie>>>  getFavoriteMovies() {
+		return repository.getFavoriteMovies();
 	}
 }
