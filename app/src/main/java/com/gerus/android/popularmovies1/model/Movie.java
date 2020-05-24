@@ -5,20 +5,22 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "Movies")
 public class Movie implements Parcelable {
 
 	public static final String ID = Movie.class.getSimpleName();
 
+	@PrimaryKey
+	private int id;
 	private double popularity;
 	@SerializedName("vote_count")
 	private int voteCount;
 	private boolean video;
 	@SerializedName("poster_path")
 	private String posterPath;
-	private int id;
 	private boolean adult;
 	@SerializedName("backdrop_path")
 	private String backdropPath;
@@ -32,8 +34,6 @@ public class Movie implements Parcelable {
 	private String overview;
 	@SerializedName("release_date")
 	private String releaseDate;
-	@SerializedName("genre_ids")
-	private List<Integer> genreIds;
 
 	public double getPopularity() {
 		return popularity;
@@ -139,14 +139,6 @@ public class Movie implements Parcelable {
 		this.releaseDate = releaseDate;
 	}
 
-	public List<Integer> getGenreIds() {
-		return genreIds;
-	}
-
-	public void setGenreIds(List<Integer> genreIds) {
-		this.genreIds = genreIds;
-	}
-
 	@Override
 	public int describeContents() {
 		return 0;
@@ -167,7 +159,6 @@ public class Movie implements Parcelable {
 		dest.writeDouble(this.voteAverage);
 		dest.writeString(this.overview);
 		dest.writeString(this.releaseDate);
-		dest.writeList(this.genreIds);
 	}
 
 	public Movie() {
@@ -187,8 +178,6 @@ public class Movie implements Parcelable {
 		this.voteAverage = in.readDouble();
 		this.overview = in.readString();
 		this.releaseDate = in.readString();
-		this.genreIds = new ArrayList<>();
-		in.readList(this.genreIds, Integer.class.getClassLoader());
 	}
 
 	public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
