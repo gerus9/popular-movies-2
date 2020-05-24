@@ -15,11 +15,21 @@ public class ErrorMessage {
 	}
 
 	private final int type;
+	private int errorID;
 	private String errorMsg;
 
 	public ErrorMessage(int type, String errorMsg) {
 		this.type = type;
 		this.errorMsg = errorMsg;
+	}
+
+	public ErrorMessage(int type, int errorID) {
+		this.type = type;
+		this.errorID = errorID;
+	}
+
+	public int getErrorID() {
+		return errorID;
 	}
 
 	public int getType() {
