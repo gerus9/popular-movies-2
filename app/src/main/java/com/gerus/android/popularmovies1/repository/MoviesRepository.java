@@ -83,21 +83,22 @@ public class MoviesRepository {
 	}
 
 	private void processResponseLiveDataList(MutableLiveData<APIResponse<List<Movie>>> listMutableLiveData, Response<MovieRequest> response) {
-		removeBooks();
 		if (response.isSuccessful() && response.body() != null && response.body().getResults() != null && !response.body().getResults().isEmpty()) {
-			addNewBooks(response.body().getResults());
+			addNewMovies(response.body().getResults());
 			listMutableLiveData.postValue(new APIResponse<>(response.body().getResults()));
 		} else {
 			listMutableLiveData.postValue(new APIResponse<>(processError(response)));
 		}
 	}
 
-	private void addNewBooks(List<Movie> results) {
-		executors.diskIO().execute(() -> moviesDB.moviesDAO().insertMovies(results));
+	public MutableLiveData<APIResponse<List<Movie>>> getFavoriteMovies() {
+		MutableLiveData<APIResponse<List<Movie>>> listMutableLiveData = new MutableLiveData<>();
+		executors.diskIO().execute(() -> listMutableLiveData.postValue(new APIResponse<>(moviesDB.favoriteDAO().getListFavorites())));
+		return listMutableLiveData;
 	}
 
-	private void removeBooks() {
-		executors.diskIO().execute(() -> moviesDB.moviesDAO().deleteAllMovies());
+	private void addNewMovies(List<Movie> results) {
+		executors.diskIO().execute(() -> moviesDB.moviesDAO().insertMovies(results));
 	}
 
 	private ErrorMessage getErrorNetwork() {
