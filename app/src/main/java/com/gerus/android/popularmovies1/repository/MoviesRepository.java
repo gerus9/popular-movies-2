@@ -7,20 +7,25 @@ import com.gerus.android.popularmovies1.database.MoviesDatabase;
 import com.gerus.android.popularmovies1.model.APIResponse;
 import com.gerus.android.popularmovies1.model.ErrorMessage;
 import com.gerus.android.popularmovies1.model.Movie;
+import com.gerus.android.popularmovies1.model.ReviewsInfo;
+import com.gerus.android.popularmovies1.model.VideoInfo;
 import com.gerus.android.popularmovies1.repository.interfaces.MoviesAPI;
 import com.gerus.android.popularmovies1.repository.model.ErrorRequest;
 import com.gerus.android.popularmovies1.repository.model.MovieRequest;
+import com.gerus.android.popularmovies1.repository.model.ReviewsRequest;
+import com.gerus.android.popularmovies1.repository.model.VideosRequest;
 import com.google.gson.Gson;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
-public class MoviesRepository {
+public class MoviesRepository implements MovieReposityCallback {
 
 	private static final Object LOCK = new Object();
 
@@ -37,7 +42,7 @@ public class MoviesRepository {
 		this.executors = executors;
 	}
 
-	public static MoviesRepository getInstance(MoviesAPI moviesAPI, MoviesDatabase moviesDB, AppExecutors executors, String keyAPI) {
+	public static MovieReposityCallback getInstance(MoviesAPI moviesAPI, MoviesDatabase moviesDB, AppExecutors executors, String keyAPI) {
 		if (sInstance == null) {
 			synchronized (LOCK) {
 				sInstance = new MoviesRepository(moviesAPI, moviesDB, executors, keyAPI);
@@ -82,6 +87,66 @@ public class MoviesRepository {
 		return listMutableLiveData;
 	}
 
+	@Override
+	public MutableLiveData<List<VideoInfo>> getVideoInfo(int idMovie) {
+		MutableLiveData<List<VideoInfo>> listMutableLiveData = new MutableLiveData<>();
+		moviesAPI.getVideos(idMovie, key).enqueue(new Callback<VideosRequest>() {
+
+			@Override
+			public void onResponse(@NonNull Call<VideosRequest> call, @NonNull Response<VideosRequest> response) {
+				if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
+					listMutableLiveData.postValue((response.body().getResults()));
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<VideosRequest> call, @NonNull Throwable t) {
+
+			}
+		});
+		return listMutableLiveData;
+	}
+
+	@Override
+	public MutableLiveData<List<ReviewsInfo>> getReviewsInfo(int idMovie) {
+		MutableLiveData<List<ReviewsInfo>> listMutableLiveData = new MutableLiveData<>();
+		moviesAPI.getReviews(idMovie, key).enqueue(new Callback<ReviewsRequest>() {
+
+			@Override
+			public void onResponse(@NonNull Call<ReviewsRequest> call, @NonNull Response<ReviewsRequest> response) {
+				if (response.isSuccessful() && response.body() != null && response.body().getResults() != null) {
+					listMutableLiveData.postValue((response.body().getResults()));
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<ReviewsRequest> call, @NonNull Throwable t) {
+
+			}
+		});
+		return listMutableLiveData;
+	}
+
+	@Override
+	public MutableLiveData<Boolean> isFavorite(int idMovie) {
+		MutableLiveData<Boolean> isFavorite = new MutableLiveData<>();
+		executors.diskIO().execute(() -> {
+			FavoriteMovie favoriteMovie = moviesDB.favoriteDAO().isFavorite(idMovie);
+			isFavorite.postValue(favoriteMovie != null);
+		});
+		return isFavorite;
+	}
+
+	@Override
+	public void setFavoriteMovie(int idMovie) {
+		executors.diskIO().execute(() -> moviesDB.favoriteDAO().insertFavorite(new FavoriteMovie(idMovie)));
+	}
+
+	@Override
+	public void deleteFavoriteMovie(int idMovie) {
+		executors.diskIO().execute(() -> moviesDB.favoriteDAO().deleteFavorite(new FavoriteMovie(idMovie)));
+	}
+
 	private void processResponseLiveDataList(MutableLiveData<APIResponse<List<Movie>>> listMutableLiveData, Response<MovieRequest> response) {
 		if (response.isSuccessful() && response.body() != null && response.body().getResults() != null && !response.body().getResults().isEmpty()) {
 			addNewMovies(response.body().getResults());
@@ -117,22 +182,5 @@ public class MoviesRepository {
 		} catch (Exception e) {
 			return new ErrorMessage(ErrorMessage.ErrorType.REQUEST, R.string.error_server);
 		}
-	}
-
-	public MutableLiveData<Boolean> isFavorite(int idMovie) {
-		MutableLiveData<Boolean> isFavorite = new MutableLiveData<>();
-		executors.diskIO().execute(() -> {
-			FavoriteMovie favoriteMovie = moviesDB.favoriteDAO().isFavorite(idMovie);
-			isFavorite.postValue(favoriteMovie != null);
-		});
-		return isFavorite;
-	}
-
-	public void setFavoriteMovie(int idMovie) {
-		executors.diskIO().execute(() -> moviesDB.favoriteDAO().insertFavorite(new FavoriteMovie(idMovie)));
-	}
-
-	public void deleteFavoriteMovie(int idMovie) {
-		executors.diskIO().execute(() -> moviesDB.favoriteDAO().deleteFavorite(new FavoriteMovie(idMovie)));
 	}
 }

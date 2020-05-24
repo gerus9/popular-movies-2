@@ -34,5 +34,11 @@ public class MovieDetailViewModel extends AndroidViewModel {
 		repository.deleteFavoriteMovie(idMovie);
 	}
 
+	LiveData<List<VideoInfo>> getVideos(int idMovie) {
+		return repository.getVideoInfo(idMovie);
+	}
 
+	LiveData<List<ReviewsInfo>> getReviews(int idMovie) {
+		return repository.getReviewsInfo(idMovie);
+	}
 }
