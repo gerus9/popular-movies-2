@@ -5,6 +5,7 @@ import android.app.Application;
 import com.gerus.android.popularmovies1.model.APIResponse;
 import com.gerus.android.popularmovies1.model.Movie;
 import com.gerus.android.popularmovies1.repository.MoviesRepository;
+import com.gerus.android.popularmovies1.utils.MoviesRepositoryUtils;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class MoviesViewModel extends AndroidViewModel {
 
 	public MoviesViewModel(@NonNull Application application) {
 		super(application);
-		repository = MoviesRepository.getInstance(application);
+		repository = new MoviesRepositoryUtils(application).getRepository();
 		listMoviesPopular = repository.getPopular();
 		listMoviesTopRated = repository.getTopRated();
 	}

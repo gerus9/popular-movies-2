@@ -3,6 +3,7 @@ package com.gerus.android.popularmovies1;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +41,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 		int POPULAR = 0;
 
 		int TOP_RATED = 1;
+
+		int FAVORITES = 2;
 	}
 
 
@@ -100,7 +103,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 
 	private void showErrorDialog(ErrorMessage errorMessage) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setMessage(errorMessage.getErrorMsg());
+		alertDialogBuilder.setMessage(
+				TextUtils.isEmpty(errorMessage.getErrorMsg()) ? getApplicationContext().getString(errorMessage.getErrorID()) : errorMessage.getErrorMsg());
 		switch (errorMessage.getType()) {
 			case ErrorMessage.ErrorType.CRITICAL:
 				alertDialogBuilder.setNeutralButton(getString(android.R.string.ok), (dialogInterface, i) -> finish());
