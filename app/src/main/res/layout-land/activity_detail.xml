@@ -54,6 +54,16 @@
 					android:id="@+id/txt_description"
 					style="@style/Description" />
 
+				<com.gerus.android.popularmovies1.view.CardInfo
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					app:cv_text="@string/label_trailers" />
+
+				<com.gerus.android.popularmovies1.view.CardInfo
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					app:cv_text="@string/label_reviews" />
+
 			</LinearLayout>
 		</androidx.core.widget.NestedScrollView>
 

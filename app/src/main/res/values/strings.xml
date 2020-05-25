@@ -16,4 +16,7 @@
 	<string name="detail_error_message">Movie data not available</string>
 	<string name="favorite">Favorite</string>
 	<string name="click_favorite">You haven\'t favorites movies</string>
+	<string name="label_dummy">Dummy</string>
+	<string name="label_trailers">Trailers</string>
+	<string name="label_reviews">Reviews</string>
 </resources>
