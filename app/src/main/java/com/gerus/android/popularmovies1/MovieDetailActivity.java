@@ -18,7 +18,6 @@ import com.gerus.android.popularmovies1.utils.ImageUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,8 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieDetailActivity extends AppCompatActivity implements TrailersAdapterCallback {
 
-	private RecyclerView recyclerViewTrailers;
-	private RecyclerView recyclerViewReviews;
 	private ActivityDetailBinding mBinding;
 	private MovieDetailViewModel model;
 	private MenuItem favoriteMenu;
@@ -62,7 +59,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 	}
 
 	private void setVideos() {
-		RecyclerView recyclerviewVideo = Objects.requireNonNull(mBinding.cardTrailers).getRecyclerView();
+		RecyclerView recyclerviewVideo = getTrailersRecyclerView();
 		TrailersAdapter trailersAdapter = new TrailersAdapter(new ArrayList<>(), this);
 		recyclerviewVideo.setLayoutManager(new LinearLayoutManager(this));
 		recyclerviewVideo.setAdapter(trailersAdapter);
@@ -70,11 +67,19 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 	}
 
 	private void setReviews() {
-		RecyclerView recyclerviewVideo = Objects.requireNonNull(mBinding.cardReviews).getRecyclerView();
+		RecyclerView recyclerviewVideo = getReviewRecyclerView();
 		ReviewsAdapter reviewsAdapter = new ReviewsAdapter(new ArrayList<>());
 		recyclerviewVideo.setLayoutManager(new LinearLayoutManager(this));
 		recyclerviewVideo.setAdapter(reviewsAdapter);
 		model.getReviews(movie.getId()).observe(this, reviewsAdapter::addData);
+	}
+
+	private RecyclerView getReviewRecyclerView() {
+		return (mBinding.cardReviews == null) ? findViewById(R.id.recycleview_review) : mBinding.cardReviews.getRecyclerView();
+	}
+
+	private RecyclerView getTrailersRecyclerView() {
+		return (mBinding.cardTrailers == null) ? findViewById(R.id.recycleview_trailers) : mBinding.cardTrailers.getRecyclerView();
 	}
 
 	private void setFavoriteMovie(Movie movie) {

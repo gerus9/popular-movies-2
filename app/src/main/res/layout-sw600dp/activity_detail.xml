@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+			<LinearLayout
+				android:id="@+id/root_detail"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:id="@+id/image"
+					style="@style/ImageViewDetail"
+					android:layout_width="@dimen/image_detail_width"
+					android:layout_height="@dimen/image_detail_height"
+					android:src="@drawable/vc_placeholder" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<androidx.appcompat.widget.AppCompatTextView
+						android:id="@+id/txt_release"
+						style="@style/Date"
+						android:layout_width="match_parent" />
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal">
+
+						<com.gerus.android.popularmovies1.view.CircleDisplay
+							android:id="@+id/circleDisplay"
+							android:layout_width="@dimen/view_rate_size"
+							android:layout_height="@dimen/view_rate_size"
+							android:layout_margin="@dimen/item_detail_liner_padding" />
+
+						<androidx.appcompat.widget.AppCompatTextView
+							style="@style/Footer_Title"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:text="@string/rating"
+							android:textStyle="bold" />
+					</LinearLayout>
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<androidx.appcompat.widget.AppCompatTextView
+				android:id="@+id/txt_description"
+				style="@style/Description"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/root_detail" />
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="horizontal"
+				android:weightSum="1"
+				android:baselineAligned="false">
+
+				<include
+					android:id="@+id/recycleview_trailers"
+					layout="@layout/card_detail"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight=".5" />
+
+				<include
+					android:id="@+id/recycleview_review"
+					layout="@layout/card_detail"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight=".5" />
+
+			</LinearLayout>
+		</LinearLayout>
+
+	</androidx.core.widget.NestedScrollView>
+
+</layout>
