@@ -66,11 +66,13 @@
 				app:layout_constraintTop_toBottomOf="@+id/root_detail" />
 
 			<com.gerus.android.popularmovies1.view.CardInfo
+				android:id="@+id/card_trailers"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				app:cv_text="@string/label_trailers" />
 
 			<com.gerus.android.popularmovies1.view.CardInfo
+				android:id="@+id/card_reviews"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				app:cv_text="@string/label_reviews" />
