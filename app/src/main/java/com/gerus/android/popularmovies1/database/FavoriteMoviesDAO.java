@@ -4,6 +4,7 @@ import com.gerus.android.popularmovies1.model.Movie;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,5 +24,5 @@ public interface FavoriteMoviesDAO {
 	FavoriteMovie isFavorite(int id);
 
 	@Query("SELECT * FROM Movies AS mov INNER JOIN Favorite as fav WHERE mov.id = fav.id")
-	List<Movie> getListFavorites();
+	LiveData<List<Movie>> getListFavorites();
 }

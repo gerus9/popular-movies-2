@@ -60,11 +60,6 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 			filterSelected = savedInstanceState.getInt(BUNDLE_FILTER);
 		}
 		viewModel = new ViewModelProvider(this).get(MoviesViewModel.class);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
 		fetchDataByFilterSelected();
 	}
 
@@ -99,9 +94,11 @@ public class MoviesActivity extends AppCompatActivity implements MoviesAdapterCa
 				});
 				break;
 			case FilterType.FAVORITES:
-				viewModel.getFavoriteMovies().observe(this, listAPIResponse -> {
-					viewModel.getFavoriteMovies().removeObservers(owner);
-					parserAPIResponse(listAPIResponse, filterSelected);
+				viewModel.getFavoriteMovies().observe(this, movieList -> {
+					if (filterSelected == FilterType.FAVORITES) {
+						setAdapterFilterType(filterSelected);
+						setAdapterList(movieList);
+					}
 				});
 				break;
 		}

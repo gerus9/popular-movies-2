@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -156,10 +157,8 @@ public class MoviesRepository implements MovieReposityCallback {
 		}
 	}
 
-	public MutableLiveData<APIResponse<List<Movie>>> getFavoriteMovies() {
-		MutableLiveData<APIResponse<List<Movie>>> listMutableLiveData = new MutableLiveData<>();
-		executors.diskIO().execute(() -> listMutableLiveData.postValue(new APIResponse<>(moviesDB.favoriteDAO().getListFavorites())));
-		return listMutableLiveData;
+	public LiveData<List<Movie>> getFavoriteMovies() {
+		return moviesDB.favoriteDAO().getListFavorites();
 	}
 
 	private void addNewMovies(List<Movie> results) {

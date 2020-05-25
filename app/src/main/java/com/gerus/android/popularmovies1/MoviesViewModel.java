@@ -11,6 +11,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class MoviesViewModel extends AndroidViewModel {
@@ -30,7 +31,7 @@ public class MoviesViewModel extends AndroidViewModel {
 		return repository.getTopRated();
 	}
 
-	MutableLiveData<APIResponse<List<Movie>>>  getFavoriteMovies() {
+	LiveData<List<Movie>> getFavoriteMovies() {
 		return repository.getFavoriteMovies();
 	}
 }

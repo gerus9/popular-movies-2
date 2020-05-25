@@ -7,6 +7,7 @@ import com.gerus.android.popularmovies1.model.VideoInfo;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public interface MovieReposityCallback {
@@ -15,7 +16,7 @@ public interface MovieReposityCallback {
 
 	MutableLiveData<APIResponse<List<Movie>>> getTopRated();
 
-	MutableLiveData<APIResponse<List<Movie>>> getFavoriteMovies();
+	LiveData<List<Movie>> getFavoriteMovies();
 
 	MutableLiveData<List<VideoInfo>> getVideoInfo(int idMovie);
 
