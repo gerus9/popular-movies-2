@@ -5,4 +5,5 @@
 	<dimen name="view_rate_size">65dp</dimen>
 	<dimen name="item_detail_liner_padding">10dp</dimen>
 	<dimen name="size_app_bar_layout">250dp</dimen>
+	<dimen name="item_card">50dp</dimen>
 </resources>

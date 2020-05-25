@@ -6,6 +6,7 @@
 	style="@style/CardView.Light.Detail"
 	app:layout_constraintEnd_toEndOf="parent"
 	app:layout_constraintStart_toStartOf="parent"
+	app:cardBackgroundColor="@color/colorPrimary"
 	app:layout_constraintTop_toTopOf="parent">
 
 	<LinearLayout
@@ -22,6 +23,7 @@
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
+				android:textColor="@color/white"
 				tools:text="@string/label_dummy" />
 
 			<androidx.appcompat.widget.AppCompatButton
@@ -42,6 +44,7 @@
 
 			<FrameLayout
 				android:id="@+id/viewStub"
+				android:background="@color/white"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent" />
 

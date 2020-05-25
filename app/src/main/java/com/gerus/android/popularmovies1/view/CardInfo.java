@@ -70,7 +70,6 @@ public class CardInfo extends LinearLayout implements View.OnClickListener {
 		textView.setText(txtValue);
 		arrowBtn = voView.findViewById(R.id.arrowBtn);
 		arrowBtn.setOnClickListener(this);
-
 		expandableView = findViewById(R.id.expandableView);
 		FrameLayout viewStub = findViewById(R.id.viewStub);
 		recyclerView = (RecyclerView) LayoutInflater.from(getContext()).inflate(R.layout.card_detail, null);
