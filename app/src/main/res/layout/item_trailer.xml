@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/root"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@android:drawable/list_selector_background">
+
+	<androidx.appcompat.widget.AppCompatImageView
+		android:layout_width="@dimen/item_card"
+		android:layout_height="@dimen/item_card"
+		android:layout_gravity="center"
+		android:src="@drawable/vc_play_arrow" />
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/text"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="10dp"
+		android:gravity="center_vertical"
+		android:textStyle="bold"
+		tools:text="@string/label_dummy" />
+
+</LinearLayout>
